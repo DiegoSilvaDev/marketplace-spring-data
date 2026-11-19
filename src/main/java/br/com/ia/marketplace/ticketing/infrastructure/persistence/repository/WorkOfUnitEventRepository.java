@@ -1,19 +1,26 @@
 package br.com.ia.marketplace.ticketing.infrastructure.persistence.repository;
 
+import br.com.ia.marketplace.ticketing.domain.CustomerId;
 import br.com.ia.marketplace.ticketing.domain.Event;
+import br.com.ia.marketplace.ticketing.domain.EventId;
 import br.com.ia.marketplace.ticketing.domain.EventRepository;
 import br.com.ia.marketplace.ticketing.domain.Seat;
+import br.com.ia.marketplace.ticketing.domain.SeatId;
 import br.com.ia.marketplace.ticketing.domain.Sector;
+import br.com.ia.marketplace.ticketing.infrastructure.persistence.entity.SeatLock;
 import org.springframework.stereotype.Repository;
 
+import java.time.Instant;
 import java.util.List;
 
 @Repository
-public class PostgresEventRepository implements EventRepository {
+public class WorkOfUnitEventRepository implements EventRepository {
     private final EventCrudRepository eventCrudRepository;
+    private final RedisSeatLockRepository redisSeatLockRepository;
 
-    public PostgresEventRepository(EventCrudRepository eventCrudRepository) {
+    public WorkOfUnitEventRepository(EventCrudRepository eventCrudRepository, RedisSeatLockRepository redisSeatLockRepository) {
         this.eventCrudRepository = eventCrudRepository;
+        this.redisSeatLockRepository = redisSeatLockRepository;
     }
 
 
@@ -47,5 +54,23 @@ public class PostgresEventRepository implements EventRepository {
                 sectors);
 
         eventCrudRepository.save(entity);
+    }
+
+    @Override
+    public boolean existsSeat(EventId eventId, SeatId seatId) {
+        return eventCrudRepository.existsByCorrelationIdAndSectors_Seats_CorrelationId(eventId.id(), seatId.id());
+    }
+
+    @Override
+    public boolean tryLockSeat(EventId eventId, SeatId seatId, CustomerId customerId) {
+        String lockId = eventId.id().toString()  + ":" +  seatId.id();
+
+        if (redisSeatLockRepository.existsById(lockId)) {
+            return false;
+        }
+
+        var lock = new SeatLock(lockId, customerId.id().toString(), Instant.now());
+        redisSeatLockRepository.save(lock);
+        return true;
     }
 }
