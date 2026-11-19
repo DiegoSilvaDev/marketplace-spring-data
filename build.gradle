@@ -43,7 +43,6 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'redis.clients:jedis'
-    testImplementation 'org.jetbrains.kotlin:kotlin-test'
 }
 
 tasks.named('test') {

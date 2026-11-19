@@ -1,0 +1,193 @@
+{
+  "info": {
+    "_postman_id": "d232ac18-9748-4726-b866-ade6b9f095a2",
+    "name": "marketplace",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "12554189"
+  },
+  "item": [
+    {
+      "name": "POST - customers",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"firstName\": \"abc\",\r\n    \"lastName\": \"cba\",\r\n    \"email\": \"teste123@gmail.com\",\r\n    \"address\": {\r\n        \"street\": \"223 Arbour Stone Place\",\r\n        \"postalCode\": \"T3G SG1\",\r\n        \"city\": \"Calgary\",\r\n        \"state\": \"Alberta\" \r\n    }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/customers",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "customers"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST - _customer - ticketing",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"firstName\": \"abc\",\r\n    \"lastName\": \"cba\",\r\n    \"email\": \"teste123@gmail.com\",\r\n    \"address\": {\r\n        \"street\": \"223 Arbour Stone Place\",\r\n        \"postalCode\": \"T3G SG1\",\r\n        \"city\": \"Calgary\",\r\n        \"state\": \"Alberta\" \r\n    }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/_customers",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "_customers"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST - events",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"title\": \"Evento automático {{$randomInt}}\",\r\n    \"date\": \"{{$timestamp}}\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/events",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "events"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST  - eventMetadatas",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"eventId\": \"4ab85a7a-8aec-46c1-b0dc-ffa143adc039\",\r\n    \"eventDescription\": \"Turnê de despedida da banda X. Um show épico com 3 horas de duração\",\r\n    \"technicalRequirements\": {\r\n        \"sound_system\": \"Line Array L-Acoustics\",\r\n        \"min_age\": 16,\r\n        \"backstage_pass_available\": true\r\n    },\r\n    \"sectors\": [\r\n        {\r\n            \"name\": \"Pista Premium\",\r\n            \"price\": 450.00\r\n        },\r\n        {\r\n            \"name\": \"Arquibancada\",\r\n            \"price\": 200.00\r\n        }\r\n    ],\r\n    \"seats\": [\r\n        {\r\n            \"code\": \"PRE-01\",\r\n            \"sectorName\": \"Pista Premium\"\r\n        },\r\n        {\r\n            \"code\": \"ARQ-10\",\r\n            \"sectorName\": \"Arquibancada\"\r\n        }\r\n    ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/eventMetadatas",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "eventMetadatas"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST  - ticketing/events/{eventId}/seats/select",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-CUSTOMER-ID",
+            "value": "4ab85a7a-8aec-46c1-b0dc-ffa143adc039"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"id\": \"ARQ-10\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/ticketing/events/4ab85a7a-8aec-46c1-b0dc-ffa143adc039/seats/select",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "ticketing",
+            "events",
+            "4ab85a7a-8aec-46c1-b0dc-ffa143adc039",
+            "seats",
+            "select"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET - showcase",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/showcase",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "showcase"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "eventId",
+      "value": ""
+    }
+  ]
+}
